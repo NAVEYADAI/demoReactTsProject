@@ -1,9 +1,8 @@
-function main(){
+export default function main(){
 
-    return{
-
-    }
+    return (
+        <></>
+    );
 }
 
 
-export default main;
