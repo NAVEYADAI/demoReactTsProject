@@ -8,8 +8,6 @@ function NewResponseDialog(props: NewResponseDialogProps){
     const {open, close} = props;
     return(
         <>
-
-
             <Dialog
             open={open}
             onClose={close}>

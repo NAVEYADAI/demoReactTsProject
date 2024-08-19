@@ -5,13 +5,20 @@ import Toolbar from '@mui/material/Toolbar';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
-
+import LogoutIcon from '@mui/icons-material/Logout';
+import {useMyContext} from "../../GlobalVaribale";
+import {getEmptyUser} from "../../types/user";
+import {red} from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
 
 
 function HomePage() {
+    const {setGlobalUser,globalUser,  titleValue} = useMyContext();
 
+    const clickLogOut = () => {
+        setGlobalUser(getEmptyUser());
+    }
     return(
         <>
             <Box sx={{ display: 'flex' }}>
@@ -29,19 +36,24 @@ function HomePage() {
                                 size="large"
                                 color="inherit"
                             >
-                                <MenuIcon />
+                                <LogoutIcon
+                                    onClick={clickLogOut}
+                                />
                             </IconButton>
                         </Box>
                         <Box
                             alignItems="center"
                         >
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                Photos
+                                {titleValue}
                             </Typography>
                         </Box>
                         <Box
                             alignItems="flex-end"
                         >
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                {globalUser.userName[0]}
+                            </Avatar>
                         </Box>
                     </Toolbar>
 

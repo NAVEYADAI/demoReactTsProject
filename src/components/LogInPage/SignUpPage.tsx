@@ -6,19 +6,39 @@ import React from "react";
 import SignUpDialog from "./SignUpDialog";
 import Divider from '@mui/material/Divider';
 import {useNavigate} from "react-router";
+import axios from 'axios';
+import {getEmptyUser, user} from "../../types/user";
+import {useMyContext} from "../../GlobalVaribale";
+
+
 
 function SignUpPage(){
     const navigate = useNavigate();
+    const {setGlobalUser} = useMyContext();
+    const [user, setUser] = React.useState<user>(getEmptyUser());
 
     const [signUpDialog, setSignUpDialog]= React.useState(false);
     const clickOpenSignUpDialog = ()=>{
-        setSignUpDialog(true);
+        if(user.firstName && user.lastName && user.email && user.phone && user.address){
+            setSignUpDialog(true);
+        }
     }
     const clickCloseSignUpDialog = ()=>{
         setSignUpDialog(false);
     }
     const backForLogInPage = () => {
         navigate("/LogIn")
+    }
+    const signUp = async () => {
+        if (user.userName && user.password) {
+            const resp = await axios.post("/api/users/signUp", user);
+
+
+            if (resp.status === 201) {
+                setGlobalUser(resp.data);
+                navigate("/MainHome");
+            }
+        }
     }
     return(
         <>
@@ -31,12 +51,35 @@ function SignUpPage(){
                         direction="row"
                         spacing={10}
                     >
-                        <TextField label="שם פרטי" variant="outlined" />
-                        <TextField label="שם משפחה" variant="outlined" />
+                        <TextField label="שם פרטי" variant="outlined"
+                                   value={user?.firstName}
+                                   onChange={(e)=>
+                                       setUser({ ...user, firstName: e.target.value})
+                        }
+                        />
+                        <TextField label="שם משפחה" variant="outlined"
+                            value={user?.lastName}
+                            onChange={(e)=>
+                            setUser({...user, lastName: e.target.value})}/>
                     </Stack>
-                    <TextField label="כתובת מייל" variant="outlined" sx={{marginTop: '15px', width: '70%'}}/>
-                    <TextField label="כתובת מגורים" variant="outlined" sx={{marginTop: '15px', width: '70%'}}/>
-                    <TextField label="מספר טלפון" variant="outlined" sx={{marginTop: '15px', width: '70%'}}/>
+                    <TextField label="כתובת מייל" variant="outlined"
+                               sx={{marginTop: '15px', width: '70%'}}
+                               value={user.email}
+                               onChange={(e)=>
+                                   setUser({...user, email:e.target.value})}
+                    />
+                    <TextField label="כתובת מגורים" variant="outlined"
+                               sx={{marginTop: '15px', width: '70%'}}
+                               value={user.address}
+                               onChange={(e)=>
+                                    setUser({...user, address:e.target.value})}
+                    />
+                    <TextField label="מספר טלפון" variant="outlined"
+                               sx={{marginTop: '15px', width: '70%'}}
+                               value={user.phone}
+                               onChange={(e)=>
+                                   setUser({...user,phone:e.target.value})}
+                    />
                     <Stack
                         direction="row"
                         divider={<Divider orientation="vertical" flexItem />}
@@ -54,6 +97,9 @@ function SignUpPage(){
                     <SignUpDialog
                         openFirst={signUpDialog}
                         onCloseFirst={clickCloseSignUpDialog}
+                        user={user}
+                        setUser={setUser}
+                        signUp={signUp}
                     />
 
                 </Stack>

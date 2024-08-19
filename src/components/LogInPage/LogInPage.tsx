@@ -6,16 +6,27 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import LoginIcon from '@mui/icons-material/Login';
 import {Link} from "@mui/material";
+import axios from 'axios'
+import {useNavigate} from "react-router";
+import {useMyContext} from "../../GlobalVaribale";
 
 
 
 
 function LogInPage(){
+    const navigate = useNavigate();
     const [userNameValue, setUserNameValue] = React.useState("");
     const [passwordValue, setPasswordValue] = React.useState("");
     const logIn = async () => {
         if (userNameValue && passwordValue) {
-            // const resp = await axios.post('url', {})
+            const resp = await axios.post("/api/users/login", {
+                username: userNameValue,
+                password: passwordValue
+            });
+
+            if (resp.status === 200) {
+                navigate("/MainHome");
+            }
         }
     }
     return(
