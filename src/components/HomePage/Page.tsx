@@ -21,7 +21,6 @@ function Page(){
                     <Route path="/about" element={<About/> } />
                     <Route path="/LogIn" element={<LogInPage/> } />
                     <Route path="/SignUp" element={<SignUpPage/> } />
-                    <Route path="/Post" element={<MainPost/>}/>
                     <Route path="/AddPost" element={<MainAddPost/>}/>
                     <Route path="/MainHome" element={<HomePage/>}/>
 

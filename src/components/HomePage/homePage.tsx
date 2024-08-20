@@ -1,64 +1,49 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import AppBar from "@mui/material/AppBar";
 import Toolbar from '@mui/material/Toolbar';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import LogoutIcon from '@mui/icons-material/Logout';
-import {useMyContext} from "../../GlobalVaribale";
-import {getEmptyUser} from "../../types/user";
-import {red} from "@mui/material/colors";
-import Avatar from "@mui/material/Avatar";
-
+import {useEffect, useState} from "react";
+import MainPost from "../DiscussionsAndPosts/MainPost";
+import MainAppBar from "./MainAppBar";
+import {AllCategory} from "../../types/category";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import axios from 'axios'
+import AppBar from "@mui/material/AppBar";
 
 function HomePage() {
-    const {setGlobalUser,globalUser,  titleValue} = useMyContext();
 
-    const clickLogOut = () => {
-        setGlobalUser(getEmptyUser());
-    }
+    const [categories, setCategories] = useState<AllCategory>();
+
+    useEffect(() => {
+        const getAllCategory = async () => {
+            const resp = await axios.get("/api/users/login", {});
+
+            if (resp.status === 200) {
+
+            }
+        }
+    }, []);
     return(
         <>
+
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar position="fixed"
-                        sx={{
-                            zIndex: (theme) => theme.zIndex.drawer + 1,
-                            flexGrow: 1,
-                }}>
-                    <Toolbar>
-                        <Box
-                            alignItems="flex-start"
-                        >
-                            <IconButton
-                                size="large"
-                                color="inherit"
-                            >
-                                <LogoutIcon
-                                    onClick={clickLogOut}
-                                />
-                            </IconButton>
-                        </Box>
-                        <Box
-                            alignItems="center"
-                        >
-                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                {titleValue}
-                            </Typography>
-                        </Box>
-                        <Box
-                            alignItems="flex-end"
-                        >
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                {globalUser.userName[0]}
-                            </Avatar>
-                        </Box>
-                    </Toolbar>
 
+                <MainAppBar/>
 
-                </AppBar>
                 <Drawer
                     variant="permanent"
                     anchor="right"
@@ -69,12 +54,44 @@ function HomePage() {
                     }}
                 >
                     <Toolbar />
-                    <Box sx={{ overflow: 'auto' }}>
+                    <List>
+                        {['טכנולוגיה', 'ספורט', 'אוכל', 'Drafts'].map((text, index) => (
+                            <ListItem key={text} disablePadding>
+                                <ListItemButton>
+                                    <ListItemText primary={text} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                    <Divider />
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">הגדר חיובי שלילי או ניטרלי</FormLabel>
+                        <FormGroup aria-label="position" >
+                            <FormControlLabel
+                                value="start"
+                                control={<Checkbox />}
+                                label="חיובי"
+                                labelPlacement="start"
+                            />
+                            <FormControlLabel
+                                value="start"
+                                control={<Checkbox />}
+                                label="שלילי"
+                                labelPlacement="start"
+                            />
+                            <FormControlLabel
+                                value="start"
+                                control={<Checkbox />}
+                                label="ניטרלי"
+                                labelPlacement="start"
+                            />
 
-                    </Box>
+                        </FormGroup>
+                    </FormControl>
                 </Drawer>
-                <Box component="main" sx={{ flexGrow: 1, p: 3, marginRight: 240 }}>
 
+                <Box sx={{  }}>
+                    <MainPost />
                 </Box>
             </Box>
         </>

@@ -1,5 +1,5 @@
 import CardActions from '@mui/material/CardActions';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';// empty
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import React from "react";
 import IconButton from '@mui/material/IconButton';

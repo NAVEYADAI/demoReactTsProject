@@ -19,3 +19,15 @@ export const getEmptyUser = ()=>{
         password:"",
     });
 }
+
+export const tmpDemoUser = () =>{
+    return({
+        firstName:"Nave",
+        lastName:"Yadai",
+        email:"NaveYadai@gmail.com",
+        phone:"0542492699",
+        address:"ערבי נחל 24 בני עייש",
+        userName:"Nave32148",
+        password:"N1a2v3e4",
+    })
+}
