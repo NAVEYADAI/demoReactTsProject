@@ -6,7 +6,6 @@ import About from "../forTest/About";
 import Tmp1 from "../forTest/Tmp1";
 import LogInPage from "../LogInPage/LogInPage";
 import SignUpPage from "../LogInPage/SignUpPage";
-import MainPost from "../DiscussionsAndPosts/MainPost";
 import MainAddPost from "../DiscussionsAndPosts/MainAddPost";
 import HomePage from "./homePage";
 

@@ -2,22 +2,25 @@ import * as React from 'react';
 import {post} from "../../types/post";
 import Post from "./Post/Post";
 import {useEffect} from "react";
-import {AllCategory} from "../../types/category";
 
 interface MainPostProps {
-    categories:AllCategory;
+    selectedCategories: string[]
 }
-function MainPost() {
-    const [postList, setPostList] = React.useState<post[]>([]);
+function MainPost(props: MainPostProps) {
+    const {selectedCategories} = props;
+    const [postList] = React.useState<post[]>([]);
+    const [count, setCount] = React.useState(0);
     // const {categories} = props;
     useEffect(() => {
-        postList.push(
-            {image:" ", text:"text", title:"title"},
-        )
-        postList.push(
-            {image:" ", text:"text2", title:"title2"}
-        )
-    }, []);
+        // postList.push(
+        //     {image:" ", text:"text", title:"title"},
+        // )
+        // postList.push(
+        //     {image:" ", text:"text2", title:"title2"}
+        // )
+        setCount(count + 1 )
+        console.log(count)
+    }, [count, selectedCategories])
     return(
         <>
             {
