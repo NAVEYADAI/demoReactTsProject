@@ -5,13 +5,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CardHeader from "@mui/material/CardHeader";
 import * as React from "react";
 
-function PostTitle(){
+interface PostTitleProps {
+    date: Date;
+    userName: string;
+}
+function PostTitle(props: PostTitleProps){
+    const {userName, date} = props;
     return(
         <>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
+                        {userName[0]}
                     </Avatar>
                 }
                 action={
@@ -19,8 +24,8 @@ function PostTitle(){
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={userName}
+                subheader={date.toString()}
             />
         </>
     );

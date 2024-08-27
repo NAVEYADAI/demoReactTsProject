@@ -1,7 +1,8 @@
-import ListItemText from "@mui/material/ListItemText";
+
 import ListItemButton from "@mui/material/ListItemButton";
 import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
+import ListItemText from "@mui/material/ListItemText";
 
 interface SubCategoryProps {
     categoryName: string;

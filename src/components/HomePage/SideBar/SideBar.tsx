@@ -5,6 +5,7 @@ import * as React from "react";
 import PositiveNegative from "./PositiveNegative";
 import SelectCategory from "./SelectCategory";
 import {CategoryState} from "../homePage";
+import NewPostButton from "./NewPostButton";
 
 interface SideBarProps {
     objectCategory: CategoryState;
@@ -38,6 +39,8 @@ const SideBar = (props : SideBarProps) => {
                     PositiveNegativeSelectedArray={PositiveNegativeSelectedArray}
                     changePositiveNegativeSelected={changePositiveNegativeSelected}
                 />
+                <Divider />
+                <NewPostButton/>
             </Drawer>
         </>
     );

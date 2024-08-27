@@ -6,14 +6,12 @@ import About from "../forTest/About";
 import Tmp1 from "../forTest/Tmp1";
 import LogInPage from "../LogInPage/LogInPage";
 import SignUpPage from "../LogInPage/SignUpPage";
-import MainAddPost from "../DiscussionsAndPosts/MainAddPost";
+import MainAddPost from "./MainAddPost";
 import HomePage from "./homePage";
 
 function Page(){
-    // @ts-ignore
     return(
         <>
-
             <Router>
                 <Routes>
                     <Route path="/" element={<Navigate to="/LogIn"/>} />

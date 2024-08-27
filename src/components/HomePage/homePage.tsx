@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import MainAppBar from "./MainAppBar";
 import SideBar from "./SideBar/SideBar";
 import {useEffect, useState} from 'react';
-import MainPost from "../DiscussionsAndPosts/MainPost";
+import MainPost from "./DiscussionsAndPosts/MainPost";
 
 
 export type CategoryState = {
@@ -50,7 +50,7 @@ function HomePage() {
     };
 
     const [PositiveNegativeSelected, setPositiveNegativeSelected]
-        = React.useState([true, false, false]);
+        = React.useState([false, false, false]);
     const changePositiveNegativeSelected = (index: number) => {
         const newChecked = [...PositiveNegativeSelected];
         newChecked[index] = !newChecked[index];
@@ -74,8 +74,10 @@ function HomePage() {
                          PositiveNegativeSelectedArray={PositiveNegativeSelected}
                          changePositiveNegativeSelected={changePositiveNegativeSelected}
                 />
-                <Box sx={{  }}>
-                    {/*<MainPost selectedCategories={selectedCategories}></MainPost>*/}
+                <Box >
+                    <MainPost selectedCategories={objectCategory}
+                              PositiveNegativeSelectedArray={PositiveNegativeSelected}
+                    />
                 </Box>
             </Box>
         </>

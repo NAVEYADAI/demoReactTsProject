@@ -4,11 +4,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
 import SignUpDialog from "./SignUpDialog";
-import Divider from '@mui/material/Divider';
 import {useNavigate} from "react-router";
 import axios from 'axios';
 import {getEmptyUser, user} from "../../types/user";
 import {useMyContext} from "../../GlobalVaribale";
+import {Link} from "@mui/material";
 
 
 
@@ -26,9 +26,7 @@ function SignUpPage(){
     const clickCloseSignUpDialog = ()=>{
         setSignUpDialog(false);
     }
-    const backForLogInPage = () => {
-        navigate("/LogIn")
-    }
+
     const signUp = async () => {
         if (user.userName && user.password) {
             const resp = await axios.post("/api/users/signUp", user);
@@ -80,19 +78,13 @@ function SignUpPage(){
                                onChange={(e)=>
                                    setUser({...user,phone:e.target.value})}
                     />
-                    <Stack
-                        direction="row"
-                        divider={<Divider orientation="vertical" flexItem />}
-                        spacing={10}
-                    >
-                        <Button variant="outlined" size="large" onClick={clickOpenSignUpDialog}>
-                            המשך
-                        </Button>
-                        <Button variant="outlined" size="large" onClick={backForLogInPage}>
-                            התחברות
-                        </Button>
 
-                    </Stack>
+                    <Button variant="outlined" size="large" onClick={clickOpenSignUpDialog}>
+                        המשך
+                    </Button>
+                    <Link href="/LogIn">לחץ להתחברות</Link>
+                    <br/>
+                    <br/>
 
                     <SignUpDialog
                         openFirst={signUpDialog}

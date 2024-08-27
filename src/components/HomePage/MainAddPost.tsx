@@ -3,8 +3,9 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useState} from "react";
+import Typography from "@mui/material/Typography";
 
-function MainAddPost() {
+const MainAddPost = () => {
     const [imagePreviewUrl, setImagePreviewUrl] = useState('ready');
     const [file, setFile] = useState<File | undefined>();
     function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
@@ -36,11 +37,16 @@ function MainAddPost() {
                 }}
             >
                 <Paper elevation={0}>
-                    <h3>title</h3>
+                    <Typography variant="h1" component="h2">
+                        כותרת
+                    </Typography>
                     <TextField id="title" label="כותרת תמונה" variant="outlined"/>
-                    <h3>text</h3>
-                    <TextField id="text" label="טקסט חופשי" variant="outlined"/>
-                    <h3>add image</h3>
+                    <Typography variant="h1" component="h2">
+                        טקסט
+                    </Typography>                    <TextField id="text" label="טקסט חופשי" variant="outlined"/>
+                    <Typography variant="h1" component="h2">
+                        הוספת תמונה
+                    </Typography>
                     <input id="text" type="file" onChange={handleOnChange}/><br/><br/>
                     {imagePreviewUrl && (
                         <img src={imagePreviewUrl} alt="Selected" style={{maxWidth: '450px', height: 'auto'}}/>

@@ -16,7 +16,8 @@ const MainAppBar = () => {
 
     useEffect(() => {
         setGlobalUser(tmpDemoUser())
-    }, );
+    }, []);
+
     const clickLogOut = () => {
         setGlobalUser(getEmptyUser());
     }
