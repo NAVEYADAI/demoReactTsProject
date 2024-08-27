@@ -17,7 +17,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import {useMyContext} from "../../../../../GlobalVaribale";
 import {Dispatch, SetStateAction} from "react";
-import uuid from 'react-uuid';
+import {v4} from 'uuid';
 interface ResponseCardProps{
     response: Response;
     sizeForMarginLeft: number;
@@ -26,7 +26,7 @@ interface ResponseCardProps{
 }
 const ResponseCard = (props: ResponseCardProps) => {
 
-    const {response, sizeForMarginLeft, setResponses, responses} = props;
+    const {response, sizeForMarginLeft, setResponses} = props;
 
     const [like, setLike]= React.useState(false);
     const [disLike, setDisLike] = React.useState(false);
@@ -37,7 +37,7 @@ const ResponseCard = (props: ResponseCardProps) => {
 
     const clickSendResponseToResponse = () => {
         const NewResponse:Response = {
-            id: uuid(),
+            id: v4(),
             userName:globalUser.userName,
             postId:response.postId,
             time: new Date(),
@@ -98,7 +98,11 @@ const ResponseCard = (props: ResponseCardProps) => {
 
     return(
         <>
-            <Card sx={{ maxWidth: 345 , marginLeft: 5 * sizeForMarginLeft}} >
+            <Card sx={{
+                marginLeft: 5 * sizeForMarginLeft,
+                width: 400 - 5 * sizeForMarginLeft,
+            }}
+            >
                 <CardHeader
                     avatar={
                         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

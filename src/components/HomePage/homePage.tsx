@@ -5,6 +5,7 @@ import MainAppBar from "./MainAppBar";
 import SideBar from "./SideBar/SideBar";
 import {useEffect, useState} from 'react';
 import MainPost from "./DiscussionsAndPosts/MainPost";
+import {useTheme} from "@mui/material";
 
 
 export type CategoryState = {
@@ -64,19 +65,26 @@ function HomePage() {
     useEffect(() => {
         console.log(PositiveNegativeSelected)
     }, [PositiveNegativeSelected]);
+    const theme = useTheme();
+
     return(
         <>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <MainAppBar />
+
                 <SideBar objectCategory={objectCategory}
                          toggleCategory={toggleCategory}
                          PositiveNegativeSelectedArray={PositiveNegativeSelected}
                          changePositiveNegativeSelected={changePositiveNegativeSelected}
                 />
-                <Box >
-                    <MainPost selectedCategories={objectCategory}
-                              PositiveNegativeSelectedArray={PositiveNegativeSelected}
+                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    {/* שימוש ב-mixin של toolbar כדי לחשב אוטומטית את גובה ה-AppBar */}
+                    <Box sx={theme.mixins.toolbar} />
+
+                    <MainPost
+                        selectedCategories={objectCategory}
+                        PositiveNegativeSelectedArray={PositiveNegativeSelected}
                     />
                 </Box>
             </Box>

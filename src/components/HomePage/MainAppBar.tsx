@@ -13,10 +13,9 @@ import {getEmptyUser, tmpDemoUser} from "../../types/user";
 
 const MainAppBar = () => {
     const {setGlobalUser,globalUser,  titleValue} = useMyContext();
-
     useEffect(() => {
         setGlobalUser(tmpDemoUser())
-    }, []);
+    },[]);
 
     const clickLogOut = () => {
         setGlobalUser(getEmptyUser());

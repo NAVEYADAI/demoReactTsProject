@@ -2,9 +2,9 @@ import DialogContent from "@mui/material/DialogContent";
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import {useState} from "react";
 import Box from "@mui/material/Box";
 import {AddPostDialogState} from "./AddPostDialog";
+import CardMedia from "@mui/material/CardMedia";
 
 
 interface AddPostBodyDialogProps {
@@ -12,26 +12,20 @@ interface AddPostBodyDialogProps {
     setNewPost: (newPost: AddPostDialogState) => void;
 }
 const AddPostBodyDialog = (props: AddPostBodyDialogProps) => {
-    const [imagePreviewUrl, setImagePreviewUrl] = useState('ready');
-    const [file, setFile] = useState<File | undefined>();
-    function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
-        const target = e.target as HTMLInputElement & {
-            files : FileList;
-        };
-        console.log('target', target.files);
-        const selectFile = target.files[0];
-        setFile(selectFile);
-        console.log(file)
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreviewUrl(reader.result as string)
-        }
-        if(selectFile){
-            reader.readAsDataURL(selectFile);
-        }
-    }
-
     const {newPost, setNewPost} = props;
+
+    const selectImageAndChangeToBase64 = (e: any) => {
+        var reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+            setNewPost({...newPost, image: reader.result as string });
+            console.log(reader.result as string)
+        };
+        reader.onerror = error => {
+            console.log("input error")
+            console.log(error);
+        };
+    }
     return(
         <>
             <DialogContent>
@@ -67,13 +61,16 @@ const AddPostBodyDialog = (props: AddPostBodyDialogProps) => {
                 </Typography>
                 <input id="text"
                        type="file"
-                       onChange={handleOnChange}
-                       value={newPost.image}
-                       // todo set image for string
+                       onChange={selectImageAndChangeToBase64}
                 /><br/><br/>
-                {imagePreviewUrl && (
-                    <img src={imagePreviewUrl} alt="Selected" style={{maxWidth: '450px', height: 'auto'}}/>
-                )}<br/>
+                    {
+                        newPost.image &&  <CardMedia
+                            sx={{ height: 140 }}
+                            image={newPost.image}
+                            title="green iguana"
+                        />
+                    }
+                <br/>
                 </Box>
             </DialogContent>
         </>

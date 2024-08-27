@@ -1,6 +1,7 @@
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import * as React from "react";
 export interface PostBodyProps {
     image?:string;
     title?:string;
@@ -14,9 +15,10 @@ function PostBody(props: PostBodyProps) {
             {
                 image && <CardMedia
                     sx={{ height: 140 }}
-                    image=""
+                    image={image}
                     title="green iguana"
                 />
+
             }
             {
                 (text || title) && <CardContent>
