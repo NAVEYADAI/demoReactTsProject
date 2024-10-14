@@ -1,18 +1,18 @@
-import React from 'react';
-import './App.css';
-import './components/AllView'
-import {MyProvider} from "./GlobalVaribale";
-import AllView from "./components/AllView";
+import React from 'react'
+import './App.css'
+import AllView from './components/AllView'
+import { Provider } from 'react-redux'
+import { store } from './store/store' // עדכן את הנתיב לחנות שלך
+import { MyProvider } from './GlobalVaribale'
 
 function App() {
-  return (
-      <div>
+    return (
         <MyProvider>
-          <AllView/>
+            <Provider store={store}>
+                <AllView />
+            </Provider>
         </MyProvider>
-      </div>
-
-  );
+    )
 }
 
-export default App;
+export default App

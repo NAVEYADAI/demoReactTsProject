@@ -1,45 +1,35 @@
-import * as React from "react";
-import List from "@mui/material/List";
-import FormControl from "@mui/material/FormControl";
-import DadCategory from "./DadCategory";
-import SubCategories from "./SubCategories";
-import {CategoryState} from "../homePage";
+import * as React from 'react'
+import List from '@mui/material/List'
+import FormControl from '@mui/material/FormControl'
+import DadCategory from './DadCategory'
+import Divider from '@mui/material/Divider'
+import { Category } from '../../../types/category'
+import Box from "@mui/material/Box";
 
 interface SelectCategoryProps {
-    objectCategory: CategoryState;
-    toggleCategory: (category: string, subcategory: string) => void;
+    objectCategory: Category[]
+    selectedCategories: number[]
+    selectSubCategory: (id: number) => void
 }
+
 const SelectCategory = (props: SelectCategoryProps) => {
-    const {objectCategory, toggleCategory} = props;
-
-    const [open, setOpen] = React.useState([false, false, false]);
-
-    const handleClick = (index: number) => {
-        const newOpen = [...open];
-        newOpen[index] = !newOpen[index];
-        setOpen(newOpen);
-    };
-
-    return(
-            <List>
-                {
-                    objectCategory &&
-                    Object.keys(objectCategory).map((category, index) =>
-                        <FormControl>
-                            <DadCategory handleClick={handleClick}
-                                         upOrDown={open[index]}
-                                         title={category}
-                                         index={index}
-                            />
-                            <SubCategories open={open[index]}
-                                           categories={objectCategory[category]}
-                                           onSelectSubCategory={toggleCategory}
-                                           dadCategory={category}
-                            />
-                        </FormControl>
-                    )
-                }
+    const { objectCategory, selectedCategories, selectSubCategory } = props
+    return (
+        <Box sx={{width:'100%'}}>
+            <List sx={{width:'100%', overflowY: 'auto' }}>
+                {objectCategory &&
+                    objectCategory.map((category) => (
+                            <Box>
+                                <Divider />
+                                <DadCategory
+                                    dadCategory={category}
+                                    selectedCategories={selectedCategories}
+                                    selectSubCategory={selectSubCategory}
+                                />
+                            </Box>
+                    ))}
             </List>
+        </Box>
     )
 }
-export default SelectCategory;
+export default SelectCategory

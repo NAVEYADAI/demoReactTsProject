@@ -1,10 +1,19 @@
+import { user } from './user'
 
 export type Response = {
-    id: string;
-    userName: string;
-    time: Date;
-    description: string;
-    postId:number;
-    responses: Response[]
+    id: string
+    createdAt: Date
+    user?: user
+    userName: string
+    description: string
+    // postId:string;
+    responseTo: Response[]
+    responseCount: number
+    grade: number
+    myLike: boolean | null
+    likeCount: number
+    disLikeCount: number
 }
-
+export type Responses = Response & {
+    responses: Response
+}

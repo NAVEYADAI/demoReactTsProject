@@ -1,31 +1,31 @@
-
-import ListItemButton from "@mui/material/ListItemButton";
-import * as React from "react";
-import Checkbox from "@mui/material/Checkbox";
-import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from '@mui/material/ListItemButton'
+import * as React from 'react'
+import ListItemText from '@mui/material/ListItemText'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
+import StarIcon from '@mui/icons-material/Star'
+import { SubCategoryType } from '../../../types/category'
 
 interface SubCategoryProps {
-    categoryName: string;
-    dadCategory: string;
-    onSelectSubCategory: (dadName: string, subName: string) => void;
-    checked: boolean;
+    selectSubCategory: (id: number) => void
+    subCategory: SubCategoryType
+    selectedCategories: number[]
 }
+
 const SubCategory = (props: SubCategoryProps) => {
-    const {onSelectSubCategory, checked,categoryName, dadCategory} = props;
-    return(
-        <>
-            <ListItemButton
-                sx={{ pl: 4 }}
-                onClick={()=>{
-                    onSelectSubCategory(dadCategory, categoryName)
-                }}
-            >
-                <ListItemText primary={categoryName} />
-                <Checkbox
-                    checked={checked}
-                />
-            </ListItemButton>
-        </>
-    );
+    const { selectedCategories, subCategory, selectSubCategory } = props
+    return (
+        <ListItemButton
+            onClick={() => {
+                selectSubCategory(subCategory.id)
+            }}
+        >
+            <ListItemText primary={subCategory.name} />
+            {selectedCategories.includes(subCategory.id) ? (
+                <StarIcon />
+            ) : (
+                <StarBorderIcon />
+            )}
+        </ListItemButton>
+    )
 }
-export default SubCategory;
+export default SubCategory

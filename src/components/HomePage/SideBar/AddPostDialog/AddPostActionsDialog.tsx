@@ -1,22 +1,20 @@
-import Button from "@mui/material/Button";
-import DialogActions from "@mui/material/DialogActions";
-import * as React from "react";
+import Button from '@mui/material/Button'
+import DialogActions from '@mui/material/DialogActions'
+import * as React from 'react'
 
 interface AddPostActionDialogProps {
-    handleClose: ()=> void;
+    handleClose: () => void
 }
 
 const AddPostActionsDialog = (props: AddPostActionDialogProps) => {
-    const {handleClose} = props
+    const { handleClose } = props
 
-    return(
-        <>
-            <DialogActions>
-                <Button onClick={handleClose} autoFocus>
-                    שלח
-                </Button>
-            </DialogActions>
-        </>
-    );
+    return (
+        <DialogActions>
+            <Button onClick={handleClose} autoFocus>
+                שלח
+            </Button>
+        </DialogActions>
+    )
 }
-export default AddPostActionsDialog;
+export default AddPostActionsDialog

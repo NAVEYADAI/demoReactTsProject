@@ -1,94 +1,96 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import MainAppBar from "./MainAppBar";
-import SideBar from "./SideBar/SideBar";
-import {useEffect, useState} from 'react';
-import MainPost from "./DiscussionsAndPosts/MainPost";
-import {useTheme} from "@mui/material";
-
-
-export type CategoryState = {
-    [key: string]: {
-        [key: string]: boolean;
-    };
-};
-const myCategories = {
-    tech: {
-        facebook: false,
-        google: false,
-        tesla: false,
-        microsoft: false,
-        apple: false,
-        tmp:false
-    },
-    sport: {
-        football: false,
-        basketball: false,
-        tennis: false,
-        volleyball: false,
-    },
-    food: {
-        pizza: false,
-        hamburger: false,
-        shawarma: false,
-        coffee: false,
-    }
-};
-
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import MainAppBar from './AppBar/MainAppBar'
+import SideBar from './SideBar/SideBar'
+import { useEffect, useState } from 'react'
+import MainPost from './ListPost/MainPost'
+import { HaveUser } from './HaveUser'
+import { Category } from '../../types/category'
+import useAxiosInstance from '../../AxiosInstance'
+import {useNavigate} from "react-router";
+import {Backdrop, CircularProgress} from "@mui/material";
 
 function HomePage() {
-    const [objectCategory, setObjectCategory] = useState<CategoryState>(myCategories);
+    const [objectCategory, setObjectCategory] = useState<Category[]>([])
+    const [open, setOpen] = useState(true);
+    const [positiveNegativeSelected, setPositiveNegativeSelected] =
+        React.useState<string | null>(null)
+    const [selectedCategories, setSelectedCategories] = useState<number[]>([])
+    const axiosInstance = useAxiosInstance()
+    const navigate = useNavigate()
 
-    const toggleCategory = (category:string, subcategory:string) => {
-        setObjectCategory(prevState => ({
-            ...prevState,
-            [category]: {
-                ...prevState[category],
-                [subcategory]: !prevState[category][subcategory],
+    const selectSubCategory = (id: number) => {
+        console.log(id)
+        setSelectedCategories((prevState) => {
+            if (!prevState.includes(id)) {
+                console.log(selectedCategories)
+                return [...prevState, id]
+            } else {
+                console.log(selectedCategories)
+                return prevState.filter((category) => category !== id)
             }
-        }));
-    };
-
-    const [PositiveNegativeSelected, setPositiveNegativeSelected]
-        = React.useState([false, false, false]);
-    const changePositiveNegativeSelected = (index: number) => {
-        const newChecked = [...PositiveNegativeSelected];
-        newChecked[index] = !newChecked[index];
-        setPositiveNegativeSelected(newChecked);
+        })
     }
-
     useEffect(() => {
-        console.log(objectCategory);
-    }, [objectCategory]);
+        const tryToken = async () =>{
+            try{
+                const res = await axiosInstance.post('/user/tokenIsGood')
+                console.log('token is good')
+            }catch (error){
+                console.log("need to move for logIn page")
+                navigate('/LogIn')
+            }
+        }
+        tryToken()
 
+    }, []);
     useEffect(() => {
-        console.log(PositiveNegativeSelected)
-    }, [PositiveNegativeSelected]);
-    const theme = useTheme();
 
-    return(
-        <>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <MainAppBar />
+        const logIn = async (): Promise<void> => {
+            try {
+                const resp = await axiosInstance.get<Category[]>('/category')
+                if (resp.data) {
+                    setObjectCategory(resp.data)
+                    setOpen(false)
+                }
+            } catch (error) {
+                console.error('Login failed:', error)
+            }
+        }
+        logIn()
+    }, [selectedCategories])
+    return (
+        <Box
+            key="all"
+            sx={{
+                width: '99vw',
+                height: '100vh',
+                position: 'absolute',
+            }}
+        >
+            <MainAppBar />
+            <SideBar
+                openLoader={open}
+                objectCategory={objectCategory}
+                selectedCategories={selectedCategories}
+                selectSubCategory={selectSubCategory}
+                PositiveNegativeSelectedValue={positiveNegativeSelected}
+                setPositiveNegativeSelected={setPositiveNegativeSelected}
+            />
 
-                <SideBar objectCategory={objectCategory}
-                         toggleCategory={toggleCategory}
-                         PositiveNegativeSelectedArray={PositiveNegativeSelected}
-                         changePositiveNegativeSelected={changePositiveNegativeSelected}
-                />
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                    {/* שימוש ב-mixin של toolbar כדי לחשב אוטומטית את גובה ה-AppBar */}
-                    <Box sx={theme.mixins.toolbar} />
-
+            {
+                open ? <Backdrop
+                    open={open}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop> :
                     <MainPost
-                        selectedCategories={objectCategory}
-                        PositiveNegativeSelectedArray={PositiveNegativeSelected}
-                    />
-                </Box>
-            </Box>
-        </>
-    );
+                    selectedCategories={selectedCategories}
+                    PositiveNegativeSelectedValue={positiveNegativeSelected}
+                />
+            }
+
+        </Box>
+    )
 }
-export default HomePage;
+export default HaveUser(HomePage)

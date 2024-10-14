@@ -1,21 +1,18 @@
-import Box from '@mui/material/Box';
-import Page from "./HomePage/Page";
+import Box from '@mui/material/Box'
+import Page from './HomePage/Page'
 
-
-function AllView(){
-
+function AllView() {
     return (
         <Box
             display="flex"
-            flexDirection="column"
             alignItems="center"
             justifyContent="center"
             height="100vh"
-            width="100vw"
+            // width="100vw"
         >
-            <Page/>
+            <Page />
         </Box>
-    );
+    )
 }
 
-export default AllView;
+export default AllView
