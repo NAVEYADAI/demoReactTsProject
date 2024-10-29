@@ -1,53 +1,57 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
-import {useEffect, useState} from "react";
+import * as React from 'react'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Checkbox from '@mui/material/Checkbox'
+import { useEffect, useState } from 'react'
 
-export interface DadSubject{
-    id:string;
-    name:string;
+export interface DadSubject {
+    id: string
+    name: string
 }
-function TmpDadSubject(props: DadSubject){
-
-    const {id, name} = props
-    const [cildSubjects, setCildSubjects] = useState<any[]>([]);
+function TmpDadSubject(props: DadSubject) {
+    const { id, name } = props
+    const [cildSubjects, setCildSubjects] = useState<any[]>([])
 
     useEffect(() => {
-        const getListOfCildSubjects = async ()=>{
+        const getListOfCildSubjects = async () => {
             console.log('get', name, 'subjects')
-            try{
-                const response = await fetch('url');
-                const json = await response.json();
+            try {
+                const response = await fetch('url')
+                const json = await response.json()
                 setCildSubjects(json)
-            }
-            catch (error){
+            } catch (error) {
                 console.log(error)
             }
         }
-        getListOfCildSubjects();
-    }, []);
+        getListOfCildSubjects()
+    }, [])
 
-    const [checked, setChecked] = useState<number[]>([]);
-    const handleToggle = (value: number)=>{
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-        if(currentIndex === -1){
-            newChecked.push(value);
-        }else{
-            newChecked.splice(currentIndex,1);
+    const [checked, setChecked] = useState<number[]>([])
+    const handleToggle = (value: number) => {
+        const currentIndex = checked.indexOf(value)
+        const newChecked = [...checked]
+        if (currentIndex === -1) {
+            newChecked.push(value)
+        } else {
+            newChecked.splice(currentIndex, 1)
         }
-        console.log(id , name)
+        console.log(id, name)
         console.log(newChecked)
-        setChecked(newChecked);
+        setChecked(newChecked)
     }
-    return(
+    return (
         <>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List
+                sx={{
+                    width: '100%',
+                    maxWidth: 360,
+                    bgcolor: 'background.paper',
+                }}
+            >
                 {[0, 1, 2, 3].map((value) => {
-                    const labelId = `checkbox-list-label-${value}`;
+                    const labelId = `checkbox-list-label-${value}`
                     return (
                         <ListItem
                             key={value}
@@ -63,13 +67,16 @@ function TmpDadSubject(props: DadSubject){
                                     inputProps={{ 'aria-labelledby': labelId }}
                                 />
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                            <ListItemText
+                                id={labelId}
+                                primary={`Line item ${value + 1}`}
+                            />
                         </ListItem>
-                    );
+                    )
                 })}
             </List>
         </>
-    );
+    )
 }
 
-export default TmpDadSubject;
+export default TmpDadSubject

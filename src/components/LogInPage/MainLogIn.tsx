@@ -1,11 +1,11 @@
-import LogInPage from "./LogInPage";
+import LogInPage from './LogInPage'
 
-function MainLogIn(){
-    return(
+function MainLogIn() {
+    return (
         <>
-            <LogInPage/>
+            <LogInPage />
         </>
-    );
+    )
 }
 
-export default MainLogIn;
+export default MainLogIn

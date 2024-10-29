@@ -1,4 +1,4 @@
-FROM ubuntu:latest
-LABEL authors="naveyadai"
-
-ENTRYPOINT ["top", "-b"]
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+CMD ["npm", "start"]

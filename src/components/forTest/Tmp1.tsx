@@ -3,11 +3,11 @@
 //
 // }
 
-function Tmp1(){
-    return(
+function Tmp1() {
+    return (
         <>
             <h1>demo tmp1</h1>
         </>
-    );
+    )
 }
-export default Tmp1;
+export default Tmp1
